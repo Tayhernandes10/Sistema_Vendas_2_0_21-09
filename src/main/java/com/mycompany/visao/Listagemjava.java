@@ -26,28 +26,28 @@ public class Listagemjava extends javax.swing.JFrame {
     }
 
     public void listarTodos(){
-        if(ControleSistema.produtos.isEmpty()){
-        DefaultTableModel defaultTableModel = new DefaultTableModel();
-        
-        defaultTableModel.addColumn("Informações");
-        defaultTableModel.addColumn("Categoria");
-        
-        tableListagem.setModel(defaultTableModel);
-        
-        defaultTableModel.setRowCount(0);
-        
-        for(int i = 0; i < ControleSistema.produtos.size(); i++){
-            Object[] linha = new Object[defaultTableModel.getColumnCount()];
-            defaultTableModel.addRow(linha);
-            
-            if(ControleSistema.produtos.get(i) instanceof Computador){
-               tableListagem.setValueAt( ((Computador)ControleSistema.produtos.get(i)).toString(), i, 0);
-               tableListagem.setValueAt("Computador", i, 1);
-            }else if(ControleSistema.produtos.get(i) instanceof VideoGame){
-                tableListagem.setValueAt(((VideoGame) ControleSistema.produtos.get(i)).toString(), i, 0);
-                tableListagem.setValueAt("Video game", i, 1);
-                
-               }
+        if(!ControleSistema.produtos.isEmpty()){
+            DefaultTableModel defaultTableModel = new DefaultTableModel();
+
+            defaultTableModel.addColumn("Informações");
+            defaultTableModel.addColumn("Categoria");
+
+            tableListagem.setModel(defaultTableModel);
+
+            defaultTableModel.setRowCount(0);
+
+            for(int i = 0; i < ControleSistema.produtos.size(); i++){
+                Object[] linha = new Object[defaultTableModel.getColumnCount()];
+                defaultTableModel.addRow(linha);
+
+                if(ControleSistema.produtos.get(i) instanceof Computador){
+                   tableListagem.setValueAt( ((Computador)ControleSistema.produtos.get(i)).toString(), i, 0);
+                   tableListagem.setValueAt("Computador", i, 1);
+                }else if(ControleSistema.produtos.get(i) instanceof VideoGame){
+                    tableListagem.setValueAt(((VideoGame) ControleSistema.produtos.get(i)).toString(), i, 0);
+                    tableListagem.setValueAt("Video game", i, 1);
+
+                }
             } 
         }  
     }
@@ -74,12 +74,40 @@ public class Listagemjava extends javax.swing.JFrame {
                     tableListagem.setValueAt(((Computador) ControleSistema.produtos.get(i)).getPreco(), linhaCont, 1);
                     tableListagem.setValueAt(((Computador) ControleSistema.produtos.get(i)).getMemoriaRam(), linhaCont, 2);
                     tableListagem.setValueAt(((Computador) ControleSistema.produtos.get(i)).getProcessador(), linhaCont, 3);
+                
+                    linhaCont++;
                 }
                 
             }
         }
     }
     
+    public void listarVideoGame (){
+        if(!ControleSistema.produtos.isEmpty()){
+            DefaultTableModel defaultTableModel = new DefaultTableModel();
+            
+            defaultTableModel.addColumn("Nome: ");
+            defaultTableModel.addColumn("Preço: ");
+            defaultTableModel.addColumn("Plataforma: ");
+            
+            tableListagem.setModel(defaultTableModel);
+            
+            defaultTableModel.setRowCount(0);
+            int linhaCont = 0;
+            for(int i = 0 ; i < ControleSistema.produtos.size(); i++){
+                if(ControleSistema.produtos.get(i) instanceof VideoGame){
+                    Object[] linha = new Object[defaultTableModel.getRowCount()];   
+                    defaultTableModel.addRow(linha);
+                    
+                    tableListagem.setValueAt(((VideoGame) ControleSistema.produtos.get(i)).getNome(), linhaCont, 0);
+                    tableListagem.setValueAt(((VideoGame) ControleSistema.produtos.get(i)).getPreco(), linhaCont, 1);
+                    tableListagem.setValueAt(((VideoGame) ControleSistema.produtos.get(i)).getPlataforma(), linhaCont, 2);
+                    
+                    linhaCont++;
+                }    
+            }
+        }    
+    }        
     /**
      * 
      * This method is called from within the constructor to initialize the form.
@@ -160,7 +188,10 @@ public class Listagemjava extends javax.swing.JFrame {
                    listarTodos();
                    break;
             case 1:
-                   listarTodos();
+                   listarComputador();
+                   break;
+            case 2:
+                   listarVideoGame();
                    break;
         }
     }//GEN-LAST:event_cbCategoriasItemStateChanged
